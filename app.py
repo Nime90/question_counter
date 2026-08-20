@@ -11,9 +11,16 @@ SPREADSHEET_ID = "11SsaBKKAMCVjpujPKQYmtIukGOisA0uLFMImq3CoRs4"
 
 
 # Authenticate with Google Sheets using gspread
+
+
 @st.cache_resource
 def get_gsheet_client():
-    return gspread.service_account(filename="service_account.json")
+    # Load credentials directly from Streamlit Secrets
+    credentials = dict(st.secrets["gcp_service_account"])
+    return gspread.service_account_from_dict(credentials)
+#@st.cache_resource
+#def get_gsheet_client():
+#    return gspread.service_account(filename="service_account.json")
 
 
 # Connect to worksheet
